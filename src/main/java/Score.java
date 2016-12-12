@@ -8,6 +8,7 @@ public class Score {
     private int setA;
     private int setB;
     private boolean hasEnded;
+    private String lastPoint;
     private String winner;
 
     // called when initialising a new game where no one has scored yet
@@ -21,6 +22,7 @@ public class Score {
 
         this.hasEnded = false;
         this.winner = "";
+        this.lastPoint = "";
     }
 
     // called when we need to set a score manually, of a past match for example
@@ -34,6 +36,7 @@ public class Score {
 
         this.hasEnded = end;
         this.winner = win;
+        this.lastPoint = win;
     }
 
     public Score (Score newScore) {
@@ -46,9 +49,11 @@ public class Score {
 
         this.hasEnded = newScore.getHasEnded();
         this.winner = newScore.getWinner();
+        this.lastPoint = newScore.getLastPoint();
     }
 
     public void grantPointA() {
+        this.lastPoint = "A";
         if(this.gameA == 6 && this.gameB == 6) {
             // a player wins the tie break if he reaches a score of 7 or greater with a 2 points difference
             if(this.pointsA > 5 && this.pointsA - this.pointsB > 0) {
@@ -75,6 +80,7 @@ public class Score {
     }
 
     public void grantPointB() {
+        this.lastPoint = "B";
         if(this.gameA == 6 && this.gameB == 6) {
             // a player wins the tie break if he reaches a score of 7 or greater with a 2 points difference
             if(this.pointsB > 5 && this.pointsB - this.pointsA > 0) {
@@ -134,9 +140,9 @@ public class Score {
         if(this.setB > 1) {
             this.hasEnded = true;
             this.winner = "B";
-        } else {
-            this.setB++;
         }
+
+        this.setB++;
     }
 
     private void grantSetA() {
@@ -147,9 +153,9 @@ public class Score {
         if(this.setA > 1) {
             this.hasEnded = true;
             this.winner = "A";
-        } else {
-            this.setA++;
         }
+
+        this.setA++;
     }
 
     public int getPointsA() {
@@ -214,5 +220,13 @@ public class Score {
 
     public void setWinner(String winner) {
         this.winner = winner;
+    }
+
+    public String getLastPoint() {
+        return lastPoint;
+    }
+
+    public void setLastPoint(String lastPoint) {
+        this.lastPoint = lastPoint;
     }
 }
