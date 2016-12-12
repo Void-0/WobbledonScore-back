@@ -50,7 +50,8 @@ public class DatabaseMock {
                                 0,
                                 3,
                                 1,
-                                true
+                                true,
+                                "A"
                         ),
                         null
                 )
@@ -66,7 +67,8 @@ public class DatabaseMock {
                                 0,
                                 2,
                                 3,
-                                true
+                                true,
+                                "B"
                         ),
                         null
                 )
@@ -82,7 +84,8 @@ public class DatabaseMock {
                                 0,
                                 3,
                                 2,
-                                true
+                                true,
+                                "A"
                         ),
                         null
                 )

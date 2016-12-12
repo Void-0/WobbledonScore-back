@@ -35,6 +35,10 @@ public class Match {
         this.scoreLog.push(new Score(this.score));
     }
 
+    public boolean hasEnded() {
+        return this.score.getHasEnded();
+    }
+
     public Player getPlayerA() {
         return playerA;
     }

@@ -8,6 +8,7 @@ public class Score {
     private int setA;
     private int setB;
     private boolean hasEnded;
+    private String winner;
 
     // called when initialising a new game where no one has scored yet
     public Score () {
@@ -19,10 +20,11 @@ public class Score {
         this.setB = 0;
 
         this.hasEnded = false;
+        this.winner = "";
     }
 
     // called when we need to set a score manually, of a past match for example
-    public Score (int pointsA, int pointsB, int gameA, int gameB, int setA, int setB, boolean end) {
+    public Score (int pointsA, int pointsB, int gameA, int gameB, int setA, int setB, boolean end, String win) {
         this.pointsA = pointsA;
         this.pointsB = pointsB;
         this.gameA = gameA;
@@ -31,6 +33,7 @@ public class Score {
         this.setB = setB;
 
         this.hasEnded = end;
+        this.winner = win;
     }
 
     public Score (Score newScore) {
@@ -42,6 +45,7 @@ public class Score {
         this.setB = newScore.getSetB();
 
         this.hasEnded = newScore.getHasEnded();
+        this.winner = newScore.getWinner();
     }
 
     public void grantPointA() {
@@ -127,8 +131,9 @@ public class Score {
         this.gameB = 0;
 
         // best of 5 sets victory condition
-        if(this.setB > 2) {
+        if(this.setB > 1) {
             this.hasEnded = true;
+            this.winner = "B";
         } else {
             this.setB++;
         }
@@ -139,8 +144,9 @@ public class Score {
         this.gameB = 0;
 
         // best of 5 sets victory condition
-        if(this.setA > 2) {
+        if(this.setA > 1) {
             this.hasEnded = true;
+            this.winner = "A";
         } else {
             this.setA++;
         }
@@ -200,5 +206,13 @@ public class Score {
 
     public void setHasEnded(boolean hasEnded) {
         this.hasEnded = hasEnded;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 }
