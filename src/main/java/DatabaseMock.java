@@ -4,7 +4,9 @@ public class DatabaseMock {
     private ArrayList<Player> playerList;
     private ArrayList<Match>  matchList;
 
-
+    /**
+     * Constructor for the mock database. Loads some test data that will be used instead of DB calls.
+     */
     public DatabaseMock() {
         this.playerList = new ArrayList<>();
         this.playerList.add(new Player(

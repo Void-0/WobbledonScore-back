@@ -4,8 +4,6 @@ import org.eclipse.jetty.websocket.api.annotations.*;
 @WebSocket
 public class ScoreWebSocketHandler {
 
-    private String sender, msg;
-
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
         String username = "User" + AppMain.nextUserNumber++;

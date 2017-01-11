@@ -4,6 +4,14 @@ public class Player {
     private int worldRanking;
     private String description;
 
+    /**
+     * Player constructor.
+     *
+     * @param pName name of the player e.g. "Kosoric Luka"
+     * @param pAge
+     * @param pRanking
+     * @param pDescription
+     */
     public Player(String pName, int pAge, int pRanking, String pDescription) {
         this.name = pName;
         this.age = pAge;

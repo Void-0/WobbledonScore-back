@@ -6,7 +6,12 @@ public class Match {
     private Score score;
     private Stack<Score> scoreLog;
 
-    // used when making a new match
+    /**
+     * Match constructor for matches that are yet to start.
+     *
+     * @param mPlayerA the player A.
+     * @param mPlayerB the player B.
+     */
     public Match(Player mPlayerA, Player mPlayerB) {
         this.playerA = mPlayerA;
         this.playerB = mPlayerB;
@@ -17,7 +22,13 @@ public class Match {
         this.scoreLog.push(new Score());
     }
 
-    // used when making a custom match, a past match for example
+    /** Match constructor for making a custom match.
+     *
+     * @param mPlayerA the player A.
+     * @param mPlayerB the player B.
+     * @param mScore the custom score.
+     * @param log the custom score log.
+     */
     public Match(Player mPlayerA, Player mPlayerB, Score mScore, Stack<Score> log) {
         this.playerA = mPlayerA;
         this.playerB = mPlayerB;
@@ -25,11 +36,17 @@ public class Match {
         this.scoreLog = log;
     }
 
+    /**
+     * Grants a point to player A.
+     */
     public void grantPointA () {
         this.score.grantPointA();
         this.scoreLog.push(new Score(this.score));
     }
 
+    /**
+     * Grants a point to player B.
+     */
     public void grantPointB () {
         this.score.grantPointB();
         this.scoreLog.push(new Score(this.score));

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Score {
     private int pointsA;
     private int pointsB;
@@ -11,7 +9,9 @@ public class Score {
     private String lastPoint;
     private String winner;
 
-    // called when initialising a new game where no one has scored yet
+    /**
+     *  Score constructor used when initialising a new game where no one has scored yet.
+     */
     public Score () {
         this.pointsA = 0;
         this.pointsB = 0;
@@ -25,7 +25,18 @@ public class Score {
         this.lastPoint = "";
     }
 
-    // called when we need to set a score manually, of a past match for example
+    /**
+     * Score constructor used when we need to set a score manually.
+     *
+     * @param pointsA number of points player A has.
+     * @param pointsB number of points player B has.
+     * @param gameA number of games player A has.
+     * @param gameB number of games player B has.
+     * @param setA number of sets player A has.
+     * @param setB number of sets player B has.
+     * @param end indicating if the match has ended.
+     * @param win contains "A" or "B", indicating who the winner is.
+     */
     public Score (int pointsA, int pointsB, int gameA, int gameB, int setA, int setB, boolean end, String win) {
         this.pointsA = pointsA;
         this.pointsB = pointsB;
@@ -39,6 +50,11 @@ public class Score {
         this.lastPoint = win;
     }
 
+    /**
+     * Score constructor used if we want to copy an existing score.
+     *
+     * @param newScore the score we want to copy.
+     */
     public Score (Score newScore) {
         this.pointsA = newScore.getPointsA();
         this.pointsB = newScore.getPointsB();
@@ -52,6 +68,9 @@ public class Score {
         this.lastPoint = newScore.getLastPoint();
     }
 
+    /**
+     * Grants a point to player A.
+     */
     public void grantPointA() {
         this.lastPoint = "A";
         if(this.gameA == 6 && this.gameB == 6) {
@@ -79,6 +98,9 @@ public class Score {
         }
     }
 
+    /**
+     * Grants a point to player B.
+     */
     public void grantPointB() {
         this.lastPoint = "B";
         if(this.gameA == 6 && this.gameB == 6) {
@@ -106,6 +128,9 @@ public class Score {
         }
     }
 
+    /**
+     * Grants a Game to player A.
+     */
     public void grantGameA() {
         this.pointsA = 0;
         this.pointsB = 0;
@@ -119,6 +144,9 @@ public class Score {
         }
     }
 
+    /**
+     * Grants a Game to player B.
+     */
     public void grantGameB() {
         this.pointsA = 0;
         this.pointsB = 0;
@@ -132,6 +160,9 @@ public class Score {
         }
     }
 
+    /**
+     * Grants a set to player B.
+     */
     private void grantSetB() {
         this.gameA = 0;
         this.gameB = 0;
@@ -145,6 +176,9 @@ public class Score {
         this.setB++;
     }
 
+    /**
+     * Grants a set to player A.
+     */
     private void grantSetA() {
         this.gameA = 0;
         this.gameB = 0;
