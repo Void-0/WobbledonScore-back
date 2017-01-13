@@ -1,4 +1,4 @@
-public class Score {
+public class MatchScore {
     private int pointsA;
     private int pointsB;
     private int gameA;
@@ -6,13 +6,13 @@ public class Score {
     private int setA;
     private int setB;
     private boolean hasEnded;
-    private String lastPoint;
-    private String winner;
+    private Scorer lastPoint;
+    private Scorer winner;
 
     /**
-     *  Score constructor used when initialising a new game where no one has scored yet.
+     *  MatchScore constructor used when initialising a new game where no one has scored yet.
      */
-    public Score () {
+    public MatchScore() {
         this.pointsA = 0;
         this.pointsB = 0;
         this.gameA = 0;
@@ -21,12 +21,12 @@ public class Score {
         this.setB = 0;
 
         this.hasEnded = false;
-        this.winner = "";
-        this.lastPoint = "";
+        this.winner = Scorer.NONE;
+        this.lastPoint = Scorer.NONE;
     }
 
     /**
-     * Score constructor used when we need to set a score manually.
+     * MatchScore constructor used when we need to set a score manually.
      *
      * @param pointsA number of points player A has.
      * @param pointsB number of points player B has.
@@ -35,9 +35,9 @@ public class Score {
      * @param setA number of sets player A has.
      * @param setB number of sets player B has.
      * @param end indicating if the match has ended.
-     * @param win contains "A" or "B", indicating who the winner is.
+     * @param win contains Scorer.PLAYER_A or Scorer.PLAYER_B, indicating who the winner is.
      */
-    public Score (int pointsA, int pointsB, int gameA, int gameB, int setA, int setB, boolean end, String win) {
+    public MatchScore(int pointsA, int pointsB, int gameA, int gameB, int setA, int setB, boolean end, Scorer win) {
         this.pointsA = pointsA;
         this.pointsB = pointsB;
         this.gameA = gameA;
@@ -51,28 +51,28 @@ public class Score {
     }
 
     /**
-     * Score constructor used if we want to copy an existing score.
+     * MatchScore constructor used if we want to copy an existing score.
      *
-     * @param newScore the score we want to copy.
+     * @param newMatchScore the score we want to copy.
      */
-    public Score (Score newScore) {
-        this.pointsA = newScore.getPointsA();
-        this.pointsB = newScore.getPointsB();
-        this.gameA = newScore.getGameA();
-        this.gameB = newScore.getGameB();
-        this.setA = newScore.getSetA();
-        this.setB = newScore.getSetB();
+    public MatchScore(MatchScore newMatchScore) {
+        this.pointsA = newMatchScore.getPointsA();
+        this.pointsB = newMatchScore.getPointsB();
+        this.gameA = newMatchScore.getGameA();
+        this.gameB = newMatchScore.getGameB();
+        this.setA = newMatchScore.getSetA();
+        this.setB = newMatchScore.getSetB();
 
-        this.hasEnded = newScore.getHasEnded();
-        this.winner = newScore.getWinner();
-        this.lastPoint = newScore.getLastPoint();
+        this.hasEnded = newMatchScore.getHasEnded();
+        this.winner = newMatchScore.getWinner();
+        this.lastPoint = newMatchScore.getLastPoint();
     }
 
     /**
      * Grants a point to player A.
      */
     public void grantPointA() {
-        this.lastPoint = "A";
+        this.lastPoint = Scorer.PLAYER_A;
         if(this.gameA == 6 && this.gameB == 6) {
             // a player wins the tie break if he reaches a score of 7 or greater with a 2 points difference
             if(this.pointsA > 5 && this.pointsA - this.pointsB > 0) {
@@ -102,7 +102,7 @@ public class Score {
      * Grants a point to player B.
      */
     public void grantPointB() {
-        this.lastPoint = "B";
+        this.lastPoint = Scorer.PLAYER_B;
         if(this.gameA == 6 && this.gameB == 6) {
             // a player wins the tie break if he reaches a score of 7 or greater with a 2 points difference
             if(this.pointsB > 5 && this.pointsB - this.pointsA > 0) {
@@ -170,7 +170,7 @@ public class Score {
         // best of 5 sets victory condition
         if(this.setB > 1) {
             this.hasEnded = true;
-            this.winner = "B";
+            this.winner = Scorer.PLAYER_B;
         }
 
         this.setB++;
@@ -186,7 +186,7 @@ public class Score {
         // best of 5 sets victory condition
         if(this.setA > 1) {
             this.hasEnded = true;
-            this.winner = "A";
+            this.winner = Scorer.PLAYER_A;
         }
 
         this.setA++;
@@ -248,19 +248,19 @@ public class Score {
         this.hasEnded = hasEnded;
     }
 
-    public String getWinner() {
+    public Scorer getWinner() {
         return winner;
     }
 
-    public void setWinner(String winner) {
+    public void setWinner(Scorer winner) {
         this.winner = winner;
     }
 
-    public String getLastPoint() {
+    public Scorer getLastPoint() {
         return lastPoint;
     }
 
-    public void setLastPoint(String lastPoint) {
+    public void setLastPoint(Scorer lastPoint) {
         this.lastPoint = lastPoint;
     }
 }

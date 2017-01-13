@@ -3,8 +3,8 @@ import java.util.Stack;
 public class Match {
     private Player playerA;
     private Player playerB;
-    private Score score;
-    private Stack<Score> scoreLog;
+    private MatchScore matchScore;
+    private Stack<MatchScore> matchScoreLog;
 
     /**
      * Match constructor for matches that are yet to start.
@@ -15,45 +15,45 @@ public class Match {
     public Match(Player mPlayerA, Player mPlayerB) {
         this.playerA = mPlayerA;
         this.playerB = mPlayerB;
-        this.score = new Score();
+        this.matchScore = new MatchScore();
 
-        //starting the match with a score of 0 for both players
-        this.scoreLog = new Stack<>();
-        this.scoreLog.push(new Score());
+        //starting the match with a matchScore of 0 for both players
+        this.matchScoreLog = new Stack<>();
+        this.matchScoreLog.push(new MatchScore());
     }
 
     /** Match constructor for making a custom match.
      *
      * @param mPlayerA the player A.
      * @param mPlayerB the player B.
-     * @param mScore the custom score.
-     * @param log the custom score log.
+     * @param mMatchScore the custom matchScore.
+     * @param log the custom matchScore log.
      */
-    public Match(Player mPlayerA, Player mPlayerB, Score mScore, Stack<Score> log) {
+    public Match(Player mPlayerA, Player mPlayerB, MatchScore mMatchScore, Stack<MatchScore> log) {
         this.playerA = mPlayerA;
         this.playerB = mPlayerB;
-        this.score = mScore;
-        this.scoreLog = log;
+        this.matchScore = mMatchScore;
+        this.matchScoreLog = log;
     }
 
     /**
      * Grants a point to player A.
      */
     public void grantPointA () {
-        this.score.grantPointA();
-        this.scoreLog.push(new Score(this.score));
+        this.matchScore.grantPointA();
+        this.matchScoreLog.push(new MatchScore(this.matchScore));
     }
 
     /**
      * Grants a point to player B.
      */
     public void grantPointB () {
-        this.score.grantPointB();
-        this.scoreLog.push(new Score(this.score));
+        this.matchScore.grantPointB();
+        this.matchScoreLog.push(new MatchScore(this.matchScore));
     }
 
     public boolean hasEnded() {
-        return this.score.getHasEnded();
+        return this.matchScore.getHasEnded();
     }
 
     public Player getPlayerA() {
@@ -72,19 +72,19 @@ public class Match {
         this.playerB = playerB;
     }
 
-    public Score getScore() {
-        return score;
+    public MatchScore getMatchScore() {
+        return matchScore;
     }
 
-    public void setScore(Score score) {
-        this.score = score;
+    public void setMatchScore(MatchScore matchScore) {
+        this.matchScore = matchScore;
     }
 
-    public Stack<Score> getScoreLog() {
-        return scoreLog;
+    public Stack<MatchScore> getMatchScoreLog() {
+        return matchScoreLog;
     }
 
-    public void setScoreLog(Stack<Score> scoreLog) {
-        this.scoreLog = scoreLog;
+    public void setMatchScoreLog(Stack<MatchScore> matchScoreLog) {
+        this.matchScoreLog = matchScoreLog;
     }
 }

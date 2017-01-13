@@ -45,7 +45,7 @@ public class DatabaseMock {
                 new Match(
                         this.playerList.get(0),
                         this.playerList.get(2),
-                        new Score(
+                        new MatchScore(
                                 0,
                                 0,
                                 0,
@@ -53,7 +53,7 @@ public class DatabaseMock {
                                 3,
                                 1,
                                 true,
-                                "A"
+                                Scorer.PLAYER_A
                         ),
                         null
                 )
@@ -62,7 +62,7 @@ public class DatabaseMock {
                 new Match(
                         this.playerList.get(1),
                         this.playerList.get(3),
-                        new Score(
+                        new MatchScore(
                                 0,
                                 0,
                                 0,
@@ -70,7 +70,7 @@ public class DatabaseMock {
                                 2,
                                 3,
                                 true,
-                                "B"
+                                Scorer.PLAYER_B
                         ),
                         null
                 )
@@ -79,7 +79,7 @@ public class DatabaseMock {
                 new Match(
                         this.playerList.get(2),
                         this.playerList.get(4),
-                        new Score(
+                        new MatchScore(
                                 0,
                                 0,
                                 0,
@@ -87,7 +87,7 @@ public class DatabaseMock {
                                 3,
                                 2,
                                 true,
-                                "A"
+                                Scorer.PLAYER_A
                         ),
                         null
                 )

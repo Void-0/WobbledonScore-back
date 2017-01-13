@@ -5,6 +5,9 @@ import spark.Service;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * Main application class that runs the simulation.
+ */
 public class AppMain implements Runnable {
     // this map is shared between sessions and threads, so it needs to be thread-safe
     private final Map<Session, String> userUsernameMap;
@@ -38,7 +41,7 @@ public class AppMain implements Runnable {
     @Override
     public void run() {
         initializeHttpService();
-        startMatchSimulation(0, 1, 5, 3);
+        startMatchSimulation(0, 1, 5000, 300);
     }
 
     /**
@@ -66,7 +69,7 @@ public class AppMain implements Runnable {
 
                 broadcastScore(match);
             }
-        }, initialDelay, period, TimeUnit.SECONDS);
+        }, initialDelay, period, TimeUnit.MILLISECONDS);
     }
 
     /**
