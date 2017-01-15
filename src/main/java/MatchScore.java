@@ -1,10 +1,6 @@
 public class MatchScore {
-    private int pointsA;
-    private int pointsB;
-    private int gameA;
-    private int gameB;
-    private int setA;
-    private int setB;
+    private PlayerScore scorePlayerA;
+    private PlayerScore scorePlayerB;
     private boolean hasEnded;
     private Scorer lastPoint;
     private Scorer winner;
@@ -13,41 +9,33 @@ public class MatchScore {
      *  MatchScore constructor used when initialising a new game where no one has scored yet.
      */
     public MatchScore() {
-        this.pointsA = 0;
-        this.pointsB = 0;
-        this.gameA = 0;
-        this.gameB = 0;
-        this.setA = 0;
-        this.setB = 0;
+        scorePlayerA = new PlayerScore();
+        scorePlayerB = new PlayerScore();
 
-        this.hasEnded = false;
-        this.winner = Scorer.NONE;
-        this.lastPoint = Scorer.NONE;
+        hasEnded = false;
+        winner = Scorer.NONE;
+        lastPoint = Scorer.NONE;
     }
 
     /**
      * MatchScore constructor used when we need to set a score manually.
      *
-     * @param pointsA number of points player A has.
-     * @param pointsB number of points player B has.
-     * @param gameA number of games player A has.
-     * @param gameB number of games player B has.
-     * @param setA number of sets player A has.
-     * @param setB number of sets player B has.
+     * @param pointsPlayerA number of points player A has.
+     * @param pointsPlayerB number of points player B has.
+     * @param gamesPlayerA number of games player A has.
+     * @param gamesPlayerB number of games player B has.
+     * @param setsPlayerA number of sets player A has.
+     * @param setsPlayerB number of sets player B has.
      * @param end indicating if the match has ended.
      * @param win contains Scorer.PLAYER_A or Scorer.PLAYER_B, indicating who the winner is.
      */
-    public MatchScore(int pointsA, int pointsB, int gameA, int gameB, int setA, int setB, boolean end, Scorer win) {
-        this.pointsA = pointsA;
-        this.pointsB = pointsB;
-        this.gameA = gameA;
-        this.gameB = gameB;
-        this.setA = setA;
-        this.setB = setB;
+    public MatchScore(int pointsPlayerA, int pointsPlayerB, int gamesPlayerA, int gamesPlayerB, int setsPlayerA, int setsPlayerB, boolean end, Scorer win) {
+        scorePlayerA = new PlayerScore(pointsPlayerA, gamesPlayerA, setsPlayerA);
+        scorePlayerB = new PlayerScore(pointsPlayerB, gamesPlayerB, setsPlayerB);
 
-        this.hasEnded = end;
-        this.winner = win;
-        this.lastPoint = win;
+        hasEnded = end;
+        winner = win;
+        lastPoint = win;
     }
 
     /**
@@ -56,188 +44,111 @@ public class MatchScore {
      * @param newMatchScore the score we want to copy.
      */
     public MatchScore(MatchScore newMatchScore) {
-        this.pointsA = newMatchScore.getPointsA();
-        this.pointsB = newMatchScore.getPointsB();
-        this.gameA = newMatchScore.getGameA();
-        this.gameB = newMatchScore.getGameB();
-        this.setA = newMatchScore.getSetA();
-        this.setB = newMatchScore.getSetB();
+        scorePlayerA = new PlayerScore(newMatchScore.getScorePlayerA().getPoints(), newMatchScore.getScorePlayerA().getGames(), newMatchScore.getScorePlayerA().getSets());
+        scorePlayerB = new PlayerScore(newMatchScore.getScorePlayerB().getPoints(), newMatchScore.getScorePlayerB().getGames(), newMatchScore.getScorePlayerB().getSets());
 
-        this.hasEnded = newMatchScore.getHasEnded();
-        this.winner = newMatchScore.getWinner();
-        this.lastPoint = newMatchScore.getLastPoint();
+        hasEnded = newMatchScore.getHasEnded();
+        winner = newMatchScore.getWinner();
+        lastPoint = newMatchScore.getLastPoint();
+    }
+
+    /**
+     * Grants a point to a given player.
+     * @param pointWinner the winner of the point.
+     * @param opponent the other player.
+     */
+    public void grantPoint(PlayerScore pointWinner, PlayerScore opponent) {
+        if(pointWinner.getGames() == 6 && opponent.getGames() == 6) {
+            // a player wins the tie break if he reaches a score of 7 or greater with a 2 points difference
+            if(pointWinner.getPoints() > 5 && pointWinner.getPoints() - opponent.getPoints() > 0) {
+                this.grantGame(pointWinner, opponent);
+            } else {
+                pointWinner.setPoints(pointWinner.getPoints() + 1);
+            }
+        } else if(pointWinner.getPoints() < 40) {
+            // we can either get a 15, 30 or 40 score
+            pointWinner.setPoints(Math.min(pointWinner.getPoints() + 15, 40));
+        } else if(pointWinner.getPoints() == 40 && opponent.getPoints() > 30) {
+            // we're in a deuce
+            if(opponent.getPoints() == 40) {
+                // its deuce so A gets advantage
+                pointWinner.setPoints(50);
+            } else {
+                // B = 50 here so back to deuce
+                opponent.setPoints(40);
+            }
+        } else {
+            // here either its A = 40 while B < 30 or A = 50 and B = 40 meaning A wins the game
+            this.grantGame(pointWinner, opponent);
+        }
     }
 
     /**
      * Grants a point to player A.
      */
-    public void grantPointA() {
+    public void grantPointPlayerA() {
         this.lastPoint = Scorer.PLAYER_A;
-        if(this.gameA == 6 && this.gameB == 6) {
-            // a player wins the tie break if he reaches a score of 7 or greater with a 2 points difference
-            if(this.pointsA > 5 && this.pointsA - this.pointsB > 0) {
-                this.grantGameA();
-            } else {
-                this.pointsA++;
-            }
-        } else if(this.pointsA < 40) {
-            // we can either get a 15, 30 or 40 score
-            this.pointsA = Math.min(this.pointsA + 15, 40);
-        } else if(this.pointsA == 40 && this.pointsB > 30) {
-            // we're in a deuce
-            if(this.pointsB == 40) {
-                // its deuce so A gets advantage
-                this.pointsA = 50;
-            } else {
-                // B = 50 here so back to deuce
-                this.pointsB = 40;
-            }
-        } else {
-            // here either its A = 40 while B < 30 or A = 50 and B = 40 meaning A wins the game
-            this.grantGameA();
-        }
+        grantPoint(scorePlayerA, scorePlayerB);
     }
 
     /**
      * Grants a point to player B.
      */
-    public void grantPointB() {
+    public void grantPointPlayerB() {
         this.lastPoint = Scorer.PLAYER_B;
-        if(this.gameA == 6 && this.gameB == 6) {
-            // a player wins the tie break if he reaches a score of 7 or greater with a 2 points difference
-            if(this.pointsB > 5 && this.pointsB - this.pointsA > 0) {
-                this.grantGameB();
-            } else {
-                this.pointsB++;
-            }
-        } else if(this.pointsB < 40) {
-            // we can either get a 15, 30 or 40 score
-            this.pointsB = Math.min(this.pointsB + 15, 40);
-        } else if(this.pointsB == 40 && this.pointsA > 30) {
-            // we're in a deuce
-            if(this.pointsA == 40) {
-                // its deuce so B gets advantage
-                this.pointsB = 50;
-            } else {
-                // A = 50 here so back to deuce
-                this.pointsA = 40;
-            }
-        } else {
-            // here either its B = 40 while A < 30 or B = 50 and A = 40 meaning B wins the game
-            this.grantGameB();
-        }
+        grantPoint(scorePlayerB, scorePlayerA);
     }
 
     /**
-     * Grants a Game to player A.
+     * Grants a Game to a given player.
+     * @param pointWinner
+     * @param opponent
      */
-    public void grantGameA() {
-        this.pointsA = 0;
-        this.pointsB = 0;
+    public void grantGame(PlayerScore pointWinner, PlayerScore opponent) {
+        pointWinner.setPoints(0);
+        opponent.setPoints(0);
 
         // tie break is handled by the points function
-        if(this.gameA > 4 && (this.gameA - this.gameB > 0)) {
+        if(pointWinner.getGames() > 4 && (pointWinner.getGames() - opponent.getGames() > 0)) {
             // A gets a set if A = 6 when B < 5 or if A = 7 when B = 5
-            this.grantSetA();
+            this.grantSet(pointWinner, opponent);
         } else {
-            this.gameA++;
+            pointWinner.setGames(pointWinner.getGames() + 1);
         }
     }
 
     /**
-     * Grants a Game to player B.
+     * Grants a set to a given player.
+     * @param pointWinner
+     * @param opponent
      */
-    public void grantGameB() {
-        this.pointsA = 0;
-        this.pointsB = 0;
-
-        // tie break is handled by the points function
-        if(this.gameB > 4 && (this.gameB - this.gameA > 0)) {
-            // B gets a set if B = 6 when A < 5 or if B = 7 when A = 5
-            this.grantSetB();
-        } else {
-            this.gameB++;
-        }
-    }
-
-    /**
-     * Grants a set to player B.
-     */
-    private void grantSetB() {
-        this.gameA = 0;
-        this.gameB = 0;
+    private void grantSet(PlayerScore pointWinner, PlayerScore opponent) {
+        pointWinner.setGames(0);
+        opponent.setGames(0);
 
         // best of 5 sets victory condition
-        if(this.setB > 1) {
-            this.hasEnded = true;
-            this.winner = Scorer.PLAYER_B;
+        if(pointWinner.getSets() > 1) {
+            hasEnded = true;
+            winner = lastPoint;
         }
 
-        this.setB++;
+        pointWinner.setSets(pointWinner.getSets() + 1);
     }
 
-    /**
-     * Grants a set to player A.
-     */
-    private void grantSetA() {
-        this.gameA = 0;
-        this.gameB = 0;
-
-        // best of 5 sets victory condition
-        if(this.setA > 1) {
-            this.hasEnded = true;
-            this.winner = Scorer.PLAYER_A;
-        }
-
-        this.setA++;
+    public PlayerScore getScorePlayerA() {
+        return scorePlayerA;
     }
 
-    public int getPointsA() {
-        return pointsA;
+    public void setScorePlayerA(PlayerScore scorePlayerA) {
+        this.scorePlayerA = scorePlayerA;
     }
 
-    public void setPointsA(int pointsA) {
-        this.pointsA = pointsA;
+    public PlayerScore getScorePlayerB() {
+        return scorePlayerB;
     }
 
-    public int getPointsB() {
-        return pointsB;
-    }
-
-    public void setPointsB(int pointsB) {
-        this.pointsB = pointsB;
-    }
-
-    public int getGameA() {
-        return gameA;
-    }
-
-    public void setGameA(int gameA) {
-        this.gameA = gameA;
-    }
-
-    public int getGameB() {
-        return gameB;
-    }
-
-    public void setGameB(int gameB) {
-        this.gameB = gameB;
-    }
-
-    public int getSetA() {
-        return setA;
-    }
-
-    public void setSetA(int setA) {
-        this.setA = setA;
-    }
-
-    public int getSetB() {
-        return setB;
-    }
-
-    public void setSetB(int setB) {
-        this.setB = setB;
+    public void setScorePlayerB(PlayerScore scorePlayerB) {
+        this.scorePlayerB = scorePlayerB;
     }
 
     public boolean getHasEnded() {

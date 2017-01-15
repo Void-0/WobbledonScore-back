@@ -40,7 +40,7 @@ public class Match {
      * Grants a point to player A.
      */
     public void grantPointA () {
-        this.matchScore.grantPointA();
+        this.matchScore.grantPointPlayerA();
         this.matchScoreLog.push(new MatchScore(this.matchScore));
     }
 
@@ -48,7 +48,7 @@ public class Match {
      * Grants a point to player B.
      */
     public void grantPointB () {
-        this.matchScore.grantPointB();
+        this.matchScore.grantPointPlayerB();
         this.matchScoreLog.push(new MatchScore(this.matchScore));
     }
 

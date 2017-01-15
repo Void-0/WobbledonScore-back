@@ -8,9 +8,9 @@ public class Player {
      * Player constructor.
      *
      * @param pName name of the player e.g. "Kosoric Luka"
-     * @param pAge
-     * @param pRanking
-     * @param pDescription
+     * @param pAge player age.
+     * @param pRanking player ranking.
+     * @param pDescription player description.
      */
     public Player(String pName, int pAge, int pRanking, String pDescription) {
         this.name = pName;
