@@ -1,5 +1,8 @@
 import java.util.Stack;
 
+/**
+ * Match class containing player information and score.
+ */
 public class Match {
     private Player playerA;
     private Player playerB;

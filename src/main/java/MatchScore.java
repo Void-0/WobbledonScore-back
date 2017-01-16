@@ -1,3 +1,6 @@
+/**
+ * Match Score class containing the score of a match as well as the logic tied to score evolution.
+ */
 public class MatchScore {
     private PlayerScore scorePlayerA;
     private PlayerScore scorePlayerB;
@@ -50,8 +53,8 @@ public class MatchScore {
 
     /**
      * Grants a point to a given player.
-     * @param pointWinner the winner of the point.
-     * @param opponent the other player.
+     * @param pointWinner score of the current point's winner
+     * @param opponent score of the opponent.
      */
     public void grantPoint(PlayerScore pointWinner, PlayerScore opponent) {
         if(pointWinner.getGames() == 6 && opponent.getGames() == 6) {
@@ -97,8 +100,8 @@ public class MatchScore {
 
     /**
      * Grants a Game to a given player.
-     * @param pointWinner
-     * @param opponent
+     * @param pointWinner score of the current point's winner
+     * @param opponent score of the opponent.
      */
     public void grantGame(PlayerScore pointWinner, PlayerScore opponent) {
         pointWinner.setPoints(0);
@@ -115,8 +118,8 @@ public class MatchScore {
 
     /**
      * Grants a set to a given player.
-     * @param pointWinner
-     * @param opponent
+     * @param pointWinner score of the current point's winner
+     * @param opponent score of the opponent.
      */
     private void grantSet(PlayerScore pointWinner, PlayerScore opponent) {
         pointWinner.setGames(0);

@@ -1,3 +1,6 @@
+/**
+ * Container class for player related information.
+ */
 public class Player {
     private String name;
     private int age;

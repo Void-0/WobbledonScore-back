@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Mock Database class used instead of a real SQL or NoSQL database.
+ */
 public class DatabaseMock {
     private List<Player> playerList;
     private List<Match> matchList;

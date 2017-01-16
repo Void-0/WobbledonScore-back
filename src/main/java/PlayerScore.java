@@ -6,12 +6,18 @@ public class PlayerScore {
     private int games;
     private int sets;
 
+    /**
+     * Default player score constructor.
+     */
     public PlayerScore() {
         points = 0;
         games = 0;
         sets = 0;
     }
 
+    /**
+     * Custom player score constructor.
+     */
     public PlayerScore(int points, int games, int sets) {
         this.points = points;
         this.games = games;
