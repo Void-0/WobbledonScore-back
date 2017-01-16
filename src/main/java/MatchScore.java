@@ -3,7 +3,6 @@ public class MatchScore {
     private PlayerScore scorePlayerB;
     private boolean hasEnded;
     private Scorer lastPoint;
-    private Scorer winner;
 
     /**
      *  MatchScore constructor used when initialising a new game where no one has scored yet.
@@ -13,7 +12,6 @@ public class MatchScore {
         scorePlayerB = new PlayerScore();
 
         hasEnded = false;
-        winner = Scorer.NONE;
         lastPoint = Scorer.NONE;
     }
 
@@ -34,7 +32,6 @@ public class MatchScore {
         scorePlayerB = new PlayerScore(pointsPlayerB, gamesPlayerB, setsPlayerB);
 
         hasEnded = end;
-        winner = win;
         lastPoint = win;
     }
 
@@ -48,7 +45,6 @@ public class MatchScore {
         scorePlayerB = new PlayerScore(newMatchScore.getScorePlayerB().getPoints(), newMatchScore.getScorePlayerB().getGames(), newMatchScore.getScorePlayerB().getSets());
 
         hasEnded = newMatchScore.getHasEnded();
-        winner = newMatchScore.getWinner();
         lastPoint = newMatchScore.getLastPoint();
     }
 
@@ -109,8 +105,8 @@ public class MatchScore {
         opponent.setPoints(0);
 
         // tie break is handled by the points function
-        if(pointWinner.getGames() > 4 && (pointWinner.getGames() - opponent.getGames() > 0)) {
-            // A gets a set if A = 6 when B < 5 or if A = 7 when B = 5
+        if(pointWinner.getGames() > 4 && (pointWinner.getGames() - opponent.getGames() > 0 || pointWinner.getGames() == 6 && opponent.getGames() == 6)) {
+            // A gets a set if A = 6 when B < 5 or if A = 7 when B = 5 or if A = 7 when B = 6
             this.grantSet(pointWinner, opponent);
         } else {
             pointWinner.setGames(pointWinner.getGames() + 1);
@@ -129,7 +125,6 @@ public class MatchScore {
         // best of 5 sets victory condition
         if(pointWinner.getSets() > 1) {
             hasEnded = true;
-            winner = lastPoint;
         }
 
         pointWinner.setSets(pointWinner.getSets() + 1);
@@ -157,14 +152,6 @@ public class MatchScore {
 
     public void setHasEnded(boolean hasEnded) {
         this.hasEnded = hasEnded;
-    }
-
-    public Scorer getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Scorer winner) {
-        this.winner = winner;
     }
 
     public Scorer getLastPoint() {

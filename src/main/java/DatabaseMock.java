@@ -1,47 +1,44 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DatabaseMock {
-    private ArrayList<Player> playerList;
-    private ArrayList<Match>  matchList;
+    private List<Player> playerList;
+    private List<Match> matchList;
 
     /**
      * Constructor for the mock database. Loads some test data that will be used instead of DB calls.
      */
     public DatabaseMock() {
-        this.playerList = new ArrayList<>();
-        this.playerList.add(new Player(
-                "Luka Kosoric",
-                27,
-                0,
-                "The game's architect."
-        ));
-        this.playerList.add(new Player(
-                "Stephen Hawking",
-                74,
-                96,
-                "Apparently jet propulsion wheelchairs and robotic tentacle arms are legal now."
-        ));
-        this.playerList.add(new Player(
-                "Nikola Tesla",
-                160,
-                42,
-                "A being of pure electric energy."
-        ));
-        this.playerList.add(new Player(
-                "Novak Djokovic",
-                29,
-                1,
-                "The only *normal* player around."
-        ));
-        this.playerList.add(new Player(
-                "Alucard Relapmi",
-                999,
-                66,
-                "Only plays at night."
-        ));
+        this.playerList = Arrays.asList(
+                new Player(
+                        "Luka Kosoric",
+                        27,
+                        0,
+                        "The game's architect."
+                ), new Player(
+                        "Stephen Hawking",
+                        74,
+                        96,
+                        "Apparently jet propulsion wheelchairs and robotic tentacle arms are legal now."
+                ), new Player(
+                        "Nikola Tesla",
+                        160,
+                        42,
+                        "A being of pure electric energy."
+                ), new Player(
+                        "Novak Djokovic",
+                        29,
+                        1,
+                        "The only *normal* player around."
+                ), new Player(
+                        "Alucard Relapmi",
+                        999,
+                        66,
+                        "Only plays at night."
+                ));
 
-        this.matchList = new ArrayList<>();
-        this.matchList.add(
+        this.matchList = Arrays.asList(
                 new Match(
                         this.playerList.get(0),
                         this.playerList.get(2),
@@ -56,10 +53,7 @@ public class DatabaseMock {
                                 Scorer.PLAYER_A
                         ),
                         null
-                )
-        );
-        this.matchList.add(
-                new Match(
+                ), new Match(
                         this.playerList.get(1),
                         this.playerList.get(3),
                         new MatchScore(
@@ -73,10 +67,7 @@ public class DatabaseMock {
                                 Scorer.PLAYER_B
                         ),
                         null
-                )
-        );
-        this.matchList.add(
-                new Match(
+                ), new Match(
                         this.playerList.get(2),
                         this.playerList.get(4),
                         new MatchScore(
@@ -94,7 +85,7 @@ public class DatabaseMock {
         );
     }
 
-    public ArrayList<Player> getPlayerList() {
+    public List<Player> getPlayerList() {
         return playerList;
     }
 
@@ -102,7 +93,7 @@ public class DatabaseMock {
         this.playerList = playerList;
     }
 
-    public ArrayList<Match> getMatchList() {
+    public List<Match> getMatchList() {
         return matchList;
     }
 
